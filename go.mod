@@ -1,4 +1,4 @@
-module solana-listner
+module github.com/bruxaodev/sol-listner
 
 go 1.23.3
 

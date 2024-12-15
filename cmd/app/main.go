@@ -1,9 +1,10 @@
 package main
 
 import (
-	"solana-listner/pkg/connection"
-	"solana-listner/pkg/decoder"
 	"time"
+
+	"github.com/bruxaodev/sol-listner/pkg/connection"
+	"github.com/bruxaodev/sol-listner/pkg/decoder"
 )
 
 func main() {

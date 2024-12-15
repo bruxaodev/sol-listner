@@ -3,7 +3,8 @@ package decoder
 import (
 	"encoding/json"
 	"log"
-	"solana-listner/pkg/decoder/pumpfun"
+
+	"github.com/bruxaodev/sol-listner/pkg/decoder/pumpfun"
 )
 
 type Decoder int

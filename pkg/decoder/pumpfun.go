@@ -2,7 +2,8 @@ package decoder
 
 import (
 	"log"
-	"solana-listner/pkg/decoder/pumpfun"
+
+	"github.com/bruxaodev/sol-listner/pkg/decoder/pumpfun"
 )
 
 func NewToken(data pumpfun.SubscribeData) {
