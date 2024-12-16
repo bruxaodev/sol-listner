@@ -1,26 +1,36 @@
 package main
 
 import (
+	"os"
 	"time"
 
 	"github.com/bruxaodev/sol-listner/pkg/connection"
 	"github.com/bruxaodev/sol-listner/pkg/decoder"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	pumpChannel := make(chan []byte)
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+
+	blockDataChannel := make(chan []byte)
+	defer close(blockDataChannel)
 	rpc := connection.NewRpc()
 
 	go rpc.Connection(
-		"ws://172.82.90.165:8900",
+		os.Getenv("WS_RPC"),
 		connection.SUBSCRIBE_PUMPFUN,
-		pumpChannel,
+		blockDataChannel,
 	)
 
 	go func() {
 		for {
-			message := <-pumpChannel
-			decoder.BlockDecoder(message, decoder.Pumpfun)
+			blockData := <-blockDataChannel
+			go func(message []byte) {
+				decoder.BlockDecoder(message, decoder.Pumpfun)
+			}(blockData)
 		}
 	}()
 
