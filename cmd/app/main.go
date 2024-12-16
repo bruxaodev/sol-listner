@@ -4,6 +4,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/bruxaodev/sol-listner/pkg/config"
 	"github.com/bruxaodev/sol-listner/pkg/connection"
 	"github.com/bruxaodev/sol-listner/pkg/decoder"
 	"github.com/joho/godotenv"
@@ -11,6 +12,10 @@ import (
 
 func main() {
 	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
+	_, err = config.SetupLogger()
 	if err != nil {
 		panic(err)
 	}

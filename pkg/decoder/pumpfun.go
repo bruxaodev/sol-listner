@@ -1,9 +1,9 @@
 package decoder
 
 import (
-	"log"
-
+	"github.com/bruxaodev/sol-listner/pkg/config"
 	"github.com/bruxaodev/sol-listner/pkg/decoder/pumpfun"
+	"go.uber.org/zap"
 )
 
 var (
@@ -19,7 +19,7 @@ func NewToken(data pumpfun.SubscribeData) {
 				if instruction.ProgramId == PUMP_PROGRAM_ID {
 					for _, account := range instruction.Accounts {
 						if account == PUMP_MINT {
-							log.Printf("new token - block: %v  tx: https://solscan.io/tx/%s \n", data.Params.Result.Context.Slot, transaction.Transaction.Signatures[0])
+							config.Logger.Info("new token", zap.Int("block", data.Params.Result.Context.Slot), zap.String("tx", transaction.Transaction.Signatures[0]))
 							continue
 						}
 					}
@@ -30,5 +30,5 @@ func NewToken(data pumpfun.SubscribeData) {
 }
 
 func NewBlock(data pumpfun.SubscribeData) {
-	log.Printf("block: %d totalTransactions: %d\n", data.Params.Result.Context.Slot, len(data.Params.Result.Value.Block.Transactions))
+	config.Logger.Info("block", zap.Int("slot", data.Params.Result.Context.Slot), zap.Int("totalTransactions", len(data.Params.Result.Value.Block.Transactions)))
 }
